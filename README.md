@@ -31,12 +31,47 @@ Available sections, their order, and the home screen depend on the configuration
 1. Open the [latest release](https://github.com/miromanestar/SAU-Dashboard-Releases/releases/latest).
 2. Under **Assets**, download the Windows installer ending in `-setup.exe`.
 3. Run the installer and follow the prompts.
-4. Have your dashboard administrator provide or confirm the configuration for this installation.
+4. Create `config.txt` in the application’s installation folder using the [configuration instructions below](#configuration).
 5. Launch the application and confirm that the dashboard content loads.
 
 The dashboard opens fullscreen and stays above other windows. Set it up on the intended kiosk computer rather than a machine you need to use for other work at the same time.
 
 Use the `-setup.exe` installer from the official release page. The other release files support automatic updates and do not need to be downloaded separately.
+
+## Configuration
+
+The application reads its connection settings from a plain-text file named **`config.txt`**. Obtain the content service address and access token from your dashboard administrator before setting it up.
+
+### Where to put the file
+
+Place `config.txt` **in the same folder as the installed application’s `.exe` file**—not alongside the downloaded `-setup.exe` installer or the desktop shortcut.
+
+To find the correct folder, right-click the application shortcut and select **Open file location**. If this opens a folder containing another shortcut, open that shortcut’s file location to reach the actual executable. Save `config.txt` there. Windows may require administrator permission to save files in the installation folder.
+
+When saving from Notepad, select **All files** as the file type and use UTF-8 encoding. Make sure the filename is exactly `config.txt`, not `config.txt.txt`. Close and reopen the application after creating or changing the file; settings are read at startup.
+
+### File contents
+
+Use one `KEY=value` setting per line, without quotation marks. For example:
+
+```ini
+# Replace these example connection settings with those from your administrator.
+API_ENDPOINT=https://missions.example.org
+API_TOKEN=REPLACE_WITH_YOUR_ACCESS_TOKEN
+POLLING_DELAY=300
+```
+
+| Setting | Required? | Accepted value |
+| --- | --- | --- |
+| `API_ENDPOINT` | Yes | The content service’s base URL, including `https://` or `http://`. Use HTTPS for remote connections. Do not append `/api`; the application adds it automatically. |
+| `API_TOKEN` | Yes | A nonempty access token supplied by your administrator. Enter only the token, without quotes or a `Bearer ` prefix. |
+| `POLLING_DELAY` | No | Content refresh interval in **seconds**: a positive finite number up to `86400` (24 hours). Defaults to `300` (5 minutes) when omitted or empty. For example, `60` refreshes every minute. |
+
+Setting names are case-sensitive. Blank lines and lines beginning with `#` are ignored; place comments on their own lines. Leading and trailing spaces around names and values are trimmed. Both required settings must have nonempty values, and an invalid URL or refresh interval prevents the dashboard from loading.
+
+`POLLING_DELAY` controls dashboard content refreshes, **not** the application’s 15-minute update checks.
+
+**Keep `config.txt` private:** it contains an access token stored as plain text. Limit access to the file, keep any backup secure, and never attach it to a public issue or release.
 
 ## Using the dashboard
 
@@ -72,7 +107,7 @@ Check each release’s notes for version-specific changes and any installation g
 
 ### The dashboard cannot load
 
-Check the computer’s internet connection. If a **Retry** button is shown, use it once the connection is restored. If the problem continues—or this is a new installation—ask your dashboard administrator to check the installation’s configuration and access to the content service.
+Check the computer’s internet connection. If a **Retry** button is shown, use it once the connection is restored. For a new installation, confirm that `config.txt` is beside the installed executable and contains a valid `API_ENDPOINT` and `API_TOKEN`, then restart the application. If the problem continues, ask your dashboard administrator to check the settings and access to the content service.
 
 ### Content looks outdated or a section is missing
 
