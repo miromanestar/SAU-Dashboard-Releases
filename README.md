@@ -1,64 +1,87 @@
-# SAU Missions Dashboard Releases
+# SAU Missions Dashboard — Release Guide
 
-Official desktop releases of the **SAU Missions Dashboard**, a fullscreen kiosk application for displaying missions information.
+An interactive missions display for SAU, designed for large touchscreen kiosks. Explore mission opportunities, discover where student missionaries are serving, and meet the people behind Student Missions—all from a fullscreen dashboard.
 
-This repository hosts installers and automatic-update files. Application source code is maintained in [SAU-Missions-React](https://github.com/miromanestar/SAU-Missions-React).
+**[Download the latest Windows release](https://github.com/miromanestar/SAU-Dashboard-Releases/releases/latest)** · **[Browse releases and release notes](https://github.com/miromanestar/SAU-Dashboard-Releases/releases)**
+
+This guide covers installation, everyday use, and updates for **SAU Missions Dashboard**. Each release includes a Windows installer and release notes describing what has changed.
+
+## What the dashboard offers
+
+- **Mission opportunities:** browse featured opportunities and open their details.
+- **Interactive globe:** explore countries and student missionary locations, with access to country statistics.
+- **SM Friends:** browse student missionary profiles and filter the directory by country.
+- **Mission updates:** view mission information and status slides.
+- **Meet the Team:** explore team profiles and scan an appointment QR code when available.
+- **Touch-friendly navigation:** move between sections using large on-screen controls and open profiles for more information.
+- **Kiosk operation:** fullscreen, always-on-top presentation with configurable return to the home screen after inactivity.
+- **Content refresh and recovery:** receive published content changes without reinstalling, with automatic retries and saved content to help keep the display usable during temporary connection problems.
+
+Available sections, their order, and the home screen depend on the configuration published by the dashboard administrator. Content and available features may also vary by installed version.
+
+## Requirements
+
+- **64-bit Windows (x64).** Current releases provide a Windows desktop installer.
+- **A large display, ideally a touchscreen.** The interface is designed for kiosk use rather than a phone-sized screen.
+- **An internet connection** to load current content, access linked websites, and download application updates.
+- **Dashboard configuration supplied by your administrator.** Installing the application alone does not provide access to the missions content service.
 
 ## Download and install
 
-**[Download the latest release](https://github.com/miromanestar/SAU-Dashboard-Releases/releases/latest)**
-
-1. Open the latest release.
+1. Open the [latest release](https://github.com/miromanestar/SAU-Dashboard-Releases/releases/latest).
 2. Under **Assets**, download the Windows installer ending in `-setup.exe`.
 3. Run the installer and follow the prompts.
-4. Launch **SAU Missions Dashboard**.
+4. Have your dashboard administrator provide or confirm the configuration for this installation.
+5. Launch the application and confirm that the dashboard content loads.
 
-Current releases target **64-bit Windows (x64)**. The application opens fullscreen and stays above other windows for kiosk use.
+The dashboard opens fullscreen and stays above other windows. Set it up on the intended kiosk computer rather than a machine you need to use for other work at the same time.
 
-An internet connection is required to retrieve dashboard content and check for updates.
+Use the `-setup.exe` installer from the official release page. The other release files support automatic updates and do not need to be downloaded separately.
 
-## Automatic updates
+## Using the dashboard
 
-The application checks for updates when it starts and every **15 minutes** afterward.
+Choose a section using the on-screen navigation. Select an opportunity, country, or portrait to see more information, then use the on-screen close or dismiss control to return. Scan available QR codes with a phone to follow the associated links.
 
-When an update is available, the application downloads and installs it automatically, then restarts. No manual download is normally required after the initial installation.
+After a period of inactivity, the dashboard closes open details and resets the browsing view. It can also return to the configured home screen; the default inactivity timeout is **three minutes**, but the administrator can change this behavior.
 
-Update signatures are verified before installation. If an update check fails, the application retries at the next scheduled check.
+Dashboard content is managed centrally and refreshes automatically. Content changes are separate from application releases and generally do not require a new installation.
 
-## Release assets
+### Temporary connection problems
 
-| File | Purpose |
-| --- | --- |
-| `*-setup.exe` | Windows installer for manual installation |
-| `*.sig` | Signature used to verify an update |
-| `latest.json` | Update metadata read by the application |
+When available, the dashboard can continue showing previously saved content while it retries the connection. A status notice indicates when displayed content is not current. Saved content is a temporary fallback, not a fully offline mode: a new installation needs a connection to load content, and images, external pages, or some information may remain unavailable offline.
 
-For manual installation, download the `.exe` installer. You do not need to download the `.sig` or `latest.json` files.
+## Releases and automatic updates
+
+New versions are published on the [Releases page](https://github.com/miromanestar/SAU-Dashboard-Releases/releases) after review, with a Windows installer, release notes, and automatic-update files. Only published stable releases are delivered through automatic updates; prereleases are not included.
+
+The installed application checks for a new stable release at startup and every **15 minutes** afterward. When an update is available, it downloads and verifies the update signature before installation, then restarts to run the new version. An update can briefly interrupt the display; a manual installer download is normally unnecessary after initial setup.
+
+If an update check or download fails, the dashboard remains available and the updater tries again at a later scheduled check. You can also install the latest published version manually from the [Releases page](https://github.com/miromanestar/SAU-Dashboard-Releases/releases).
+
+Check each release’s notes for version-specific changes and any installation guidance.
+
+### Which release file should I download?
+
+| File | Purpose | Download manually? |
+| --- | --- | --- |
+| `*-setup.exe` | Windows installer | **Yes**, for initial installation or a manual update |
+| `*.sig` | Signature used by the automatic updater | No |
+| `latest.json` | Information used by the application to find updates | No |
 
 ## Troubleshooting
 
 ### The dashboard cannot load
 
-Check the kiosk's internet connection and configuration. If the application displays a **Retry** button, use it after resolving the issue.
+Check the computer’s internet connection. If a **Retry** button is shown, use it once the connection is restored. If the problem continues—or this is a new installation—ask your dashboard administrator to check the installation’s configuration and access to the content service.
 
-### An update has not appeared
+### Content looks outdated or a section is missing
 
-Confirm that the kiosk can reach GitHub. Restart the application to trigger an immediate update check, or wait for the next scheduled check.
+Look for a connection or saved-content notice and check internet access. Sections can also be hidden or reordered by the administrator. Ask them to confirm that the expected content and navigation settings have been published.
 
-You can also download the latest installer from the [Releases page](https://github.com/miromanestar/SAU-Dashboard-Releases/releases).
+### An application update has not appeared
 
-## For maintainers
+Confirm that the computer can reach GitHub. Restart the application to trigger a startup update check, or wait for the next scheduled check. Only published stable releases are delivered automatically. If needed, download the latest installer from the [Releases page](https://github.com/miromanestar/SAU-Dashboard-Releases/releases).
 
-Releases are built by the GitHub Actions workflow in the source repository and uploaded here as **draft releases**.
+### Need more help?
 
-Before publishing:
-
-1. Confirm the release version and notes.
-2. Verify that the Windows installer, its update signature, and `latest.json` are attached.
-3. Publish the release as a stable release.
-
-The application reads update metadata from:
-
-https://github.com/miromanestar/SAU-Dashboard-Releases/releases/latest/download/latest.json
-
-Keep the updater assets attached to published releases. Draft and prerelease builds are not intended for the stable update channel.
+Contact the person or team responsible for your SAU Missions Dashboard installation. Include the installed version if known, what you expected to see, and the exact message or a screenshot of the problem. Do not share access tokens, configuration files, or private personal information in public reports.
